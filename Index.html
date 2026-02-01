@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navbar + Galery</title>
+<style>
+  body { margin:0; font-family: Arial, sans-serif; }
+
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: maroon;
+    color: white;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .logo { font-weight: bold; font-size: 20px; }
+
+  /* Hamburger */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 20px;
+    cursor: pointer;
+  }
+  .menu-toggle span {
+    display: block;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* Navbar links */
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  .nav-links li { position: relative; }
+  .nav-links li a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 0;
+    display: block;
+  }
+
+  /* Dropdown hidden by default */
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    background: maroon;
+    flex-direction: column;
+    min-width: 150px;
+    border-radius: 4px;
+    z-index: 1000;
+  }
+  .dropdown a { padding: 10px; color: white; }
+  .dropdown a:hover { background: #800000; }
+
+  /* ===== Galery ===== */
+  .galery {
+    display: none;
+    padding: 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .galery img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 2px solid #800000;
+    transition: transform 0.3s;
+  }
+  .galery img:hover { transform: scale(1.05); }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .menu-toggle { display: flex; }
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      background: maroon;
+      position: absolute;
+      top: 50px;
+      right: 0;
+      width: 200px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .nav-links.show { display: flex; }
+
+    /* Hamburger animasi jadi X */
+    .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="logo">MyWebsite</div>
+
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" id="nav-links">
+    <li>
+      <a href="#" id="dropdown-btn">Pilihan ▼</a>
+      <div class="dropdown" id="dropdown-menu">
+        <a href="#" id="kata-btn">Kata Pengantar</a>
+        <a href="#" id="galery-btn">Gallery</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<!-- Content -->
+<div class="content">
+  <div id="kata" style="padding:20px;">
+    <h1>Kata Pengantar</h1>
+    <p>Ini adalah kata pengantar contoh.</p>
+  </div>
+
+  <div class="galery" id="galery">
+    <h1>Galery</h1>
+    <div style="display:flex; flex-wrap:wrap;">
+      <img src="1d9f970d5cb24c61dc3e4e10cac3edbb.jpg" alt="img1">
+      <img src="https://picsum.photos/200/150?random=2" alt="img2">
+      <img src="https://picsum.photos/200/150?random=3" alt="img3">
+      <img src="https://picsum.photos/200/150?random=4" alt="img4">
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script>
+  // Hamburger toggle
+  const toggle = document.getElementById('menu-toggle');
+  const nav = document.getElementById('nav-links');
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('show');
+    toggle.classList.toggle('active');
+  });
+
+  // Dropdown toggle
+  const dropdownBtn = document.getElementById('dropdown-btn');
+  const dropdownMenu = document.getElementById('dropdown-menu');
+  dropdownBtn.addEventListener('click', e => {
+    e.preventDefault();
+    dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+    dropdownMenu.style.flexDirection = 'column';
+  });
+
+  // Content switching
+  const kataBtn = document.getElementById('kata-btn');
+  const galeryBtn = document.getElementById('galery-btn');
+  const kata = document.getElementById('kata');
+  const galery = document.getElementById('galery');
+
+  kataBtn.addEventListener('click', e => {
+    e.preventDefault();
+    kata.style.display = 'block';
+    galery.style.display = 'none';
+  });
+
+  galeryBtn.addEventListener('click', e => {
+    e.preventDefault();
+    galery.style.display = 'flex';
+    kata.style.display = 'none';
+  });
+</script>
+
+</body>
+</html>
